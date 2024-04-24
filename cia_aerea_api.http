@@ -1,0 +1,6 @@
+@cia_aerea_api_HostAddress = http://localhost:5211
+
+GET {{cia_aerea_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,93 @@
+# Arquivos específicos do usuário
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Resultados da compilação
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Diretórios do Visual Studio Code
+.vscode/
+.vs/
+
+# Arquivos de cache do Visual Studio
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Arquivos de perfil do Visual Studio
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Arquivos de cache do Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos de banco de dados do SQL Server
+*.mdf
+*.ldf
+
+# Arquivos de configuração do Docker
+**/docker-compose*.yml
+
+# Arquivos de pacotes NuGet
+*.nupkg
+# Pasta de pacotes pode ser ignorada por causa da restauração de pacotes
+**/packages/*
+# exceto build/, que é usado como um alvo do MSBuild.
+!**/packages/build/
+# Descomente se necessário, no entanto, geralmente será regenerado quando necessário
+#!**/packages/repositories.config
+# Arquivos project.json do NuGet v3 produzem mais arquivos ignoráveis
+*.nuget.props
+*.nuget.targets
+
+# Arquivos de saída do Microsoft Azure
+csx/
+*.build.csdef
+
+# Emulador do Microsoft Azure
+ecf/
+rcf/
+
+# Diretórios e arquivos de pacote de aplicativos da Windows Store
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+
+# Arquivos de cache do Visual Studio
+# arquivos terminados em .cache podem ser ignorados
+*.cache
+# Arquivos de log
+*.log
+*.sqllite
+*.sqlite-journal
+
+# Pastas bin e obj
+**/[Bb]in/
+**/[Oo]bj/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.tlog
+*.vsix
+*.userprefs
