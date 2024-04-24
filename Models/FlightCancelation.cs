@@ -1,4 +1,4 @@
-namespace cia_aerea_api.Models
+namespace cia_aerea_api.Models;
 
 public class FlightCancelation
 {

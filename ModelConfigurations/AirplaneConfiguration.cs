@@ -1,4 +1,8 @@
-namespace cia_aerea_api.ModelConfigurations
+using cia_aerea_api.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace cia_aerea_api.ModelConfigurations;
 
 public class AirplaneConfiguration : IEntityTypeConfiguration<Airplane>
 {

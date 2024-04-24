@@ -1,6 +1,10 @@
-namespace cia_aerea_api.ModelConfigurations
+using cia_aerea_api.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class FlightCancelationConfigure : IEntityTypeConfiguration<FlightCancelation>
+namespace cia_aerea_api.ModelConfigurations;
+
+public class FlightCancelationConfiguration : IEntityTypeConfiguration<FlightCancelation>
 {
     public void Configure(EntityTypeBuilder<FlightCancelation> builder) 
     {

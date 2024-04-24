@@ -1,11 +1,15 @@
-namespace cia_aerea_api.ModelConfigurations
+using cia_aerea_api.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace cia_aerea_api.ModelConfigurations;
 
 public class FlightConfiguration :IEntityTypeConfiguration<Flight>
 {
      public void Configure(EntityTypeBuilder<Flight> builder) 
     {
         builder.ToTable("tb_flights");
-        builder.HasKey(p => f.Id);
+        builder.HasKey(f => f.Id);
         
         builder.Property(f => f.Id)
             .ValueGeneratedOnAdd();

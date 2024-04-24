@@ -1,4 +1,7 @@
-namespace cia_aerea_api.Models
+using cia_aerea_api.Models;
+using cia_aerea_api.Models.Enums;
+
+namespace cia_aerea_api.Models;
 
 public class Maintenance
 {
@@ -16,5 +19,5 @@ public class Maintenance
     public MaintenanceType TypeOfMaintenance { get; set; }
     public int AirplaneId { get; set; }
 
-    public Airplane Airplane { get; set; } = null!
+    public Airplane Airplane { get; set; } = null!;
 }

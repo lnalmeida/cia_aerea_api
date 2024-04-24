@@ -1,4 +1,8 @@
-namespace cia_aerea_api.Models.Contexts
+using Microsoft.EntityFrameworkCore;
+using cia_aerea_api.ModelConfigurations;
+using cia_aerea_api.Models;
+
+namespace cia_aerea_api.Contexts;
 
 public class CiaAereaContext : DbContext 
 {
@@ -18,5 +22,14 @@ public class CiaAereaContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(_configuration.GetConnectionString("CiaAereaConnection"));
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new AirplaneConfiguration());
+        modelBuilder.ApplyConfiguration(new FlightConfiguration());
+        modelBuilder.ApplyConfiguration(new PilotConfiguration());
+        modelBuilder.ApplyConfiguration(new MaintenanceConfiguration());
+        modelBuilder.ApplyConfiguration(new FlightCancelationConfiguration());
     }
 }

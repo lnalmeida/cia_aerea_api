@@ -1,4 +1,4 @@
-namespace cia_aerea_api.Models
+namespace cia_aerea_api.Models;
 
 public class Airplane
 {
@@ -11,7 +11,7 @@ public class Airplane
     }
     
     public int Id { get; set; }
-    public string manufacturer { get; set; } 
+    public string Manufacturer { get; set; } 
     public string Model { get; set; } 
     public string Prefix { get; set; } 
 

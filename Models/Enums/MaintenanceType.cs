@@ -1,4 +1,4 @@
-namespace cia_aerea_api.Models.Enums
+namespace cia_aerea_api.Models.Enums;
 
 public enum MaintenanceType
 {

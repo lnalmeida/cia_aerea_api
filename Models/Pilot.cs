@@ -1,4 +1,5 @@
-namespace cia_aerea_api.Models
+namespace cia_aerea_api.Models;
+
 public class Pilot
 {
     public Pilot(string name, string registration) 

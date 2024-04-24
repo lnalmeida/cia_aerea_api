@@ -1,8 +1,10 @@
-namespace cia_aerea_api.Models
+using cia_aerea_api.Models;
+
+namespace cia_aerea_api.Models;
 
 public class Flight
 {
-    public Flight( string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime, int airplaneId, int pilotId, Airplane airplane, Pilot pilot) 
+    public Flight( string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime, int airplaneId, int pilotId) 
     {
         Origin = origin;
         Destiny = destiny;
@@ -20,7 +22,7 @@ public class Flight
     public int AirplaneId { get; set; }
     public int PilotId { get; set; }
 
-    public Airplane Airplane { get; set; } = null!
-    public Pilot Pilot { get; set; } = null!
+    public Airplane Airplane { get; set; } = null!;
+    public Pilot Pilot { get; set; } = null!;
     public FlightCancelation? FlightCancelations { get; set; } 
 }
