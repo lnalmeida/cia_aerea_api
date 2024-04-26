@@ -1,7 +1,10 @@
 using System.Linq.Expressions;
 using cia_aerea_api.Contexts;
 using cia_aerea_api.Models;
+using cia_aerea_api.Validators.Services;
+using cia_aerea_api.Validators.Airplanes;
 using cia_aerea_api.ViewModels.Airplane;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +13,7 @@ namespace cia_aerea_api.Repositories;
 public class AirplaneRepository 
 {
     private readonly CiaAereaContext _context;
+
 
     public AirplaneRepository(CiaAereaContext context)
     {
