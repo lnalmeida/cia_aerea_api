@@ -1,4 +1,3 @@
-using Azure;
 using cia_aerea_api.ViewModels.Airplane;
 using cia_aerea_api.Repositories;
 using cia_aerea_api.Validators.Airplanes;
@@ -18,12 +17,13 @@ public class AirplaneController : ControllerBase
     private readonly UpdateAirplaneValidator _updateAirplaneValidator;
     private readonly DeleteAirplaneValidator _deleteAirplaneValidator;
 
-    public AirplaneController(AirplaneRepository airplaneRepository, ValidationService validationService, AddAirplaneValidator addAirplaneValidator, UpdateAirplaneValidator updateAirplaneValidator)
+    public AirplaneController(AirplaneRepository airplaneRepository, ValidationService validationService, AddAirplaneValidator addAirplaneValidator, UpdateAirplaneValidator updateAirplaneValidator, DeleteAirplaneValidator deleteAirplaneValidator)
     {
         _airplaneRepository = airplaneRepository;
         _validationService = validationService;
         _addAirplaneValidator = addAirplaneValidator;
         _updateAirplaneValidator = updateAirplaneValidator;
+        _deleteAirplaneValidator = deleteAirplaneValidator;
     }
     
     [HttpGet]
@@ -128,7 +128,7 @@ public class AirplaneController : ControllerBase
     }
     
     [HttpDelete]
-    public  async Task<ActionResult<ResponseViewModel<string>>> DeleteirplaneAsync( int id)
+    public  async Task<ActionResult<ResponseViewModel<string>>> DeleteAirplaneAsync( int id)
     {
         var validationResult = await _validationService.ValidateModel(id, _deleteAirplaneValidator);
         if (!validationResult.IsValid)
