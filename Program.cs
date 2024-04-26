@@ -15,6 +15,8 @@ builder.Services.AddDbContext<CiaAereaContext>();
 builder.Services.AddScoped<AirplaneRepository>();
 //validators
 builder.Services.AddScoped<AddAirplaneValidator>();
+builder.Services.AddScoped<UpdateAirplaneValidator>();
+builder.Services.AddScoped<DeleteAirplaneValidator>();
 builder.Services.AddScoped<ValidationService>();
 
 builder.Services.AddEndpointsApiExplorer();

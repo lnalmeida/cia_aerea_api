@@ -5,7 +5,7 @@ namespace cia_aerea_api.Validators.Services;
 
 public class ValidationService
 {
-    public async Task<ValidationResultModel> ValidateModel<T>(T model, AbstractValidator<T> validator) where T : class
+    public async Task<ValidationResultModel> ValidateModel<T>(T model, AbstractValidator<T> validator)
     {
         var validationResult = await validator.ValidateAsync(model);
         var errors = new List<string>();

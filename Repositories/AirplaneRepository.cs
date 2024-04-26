@@ -84,7 +84,7 @@ public class AirplaneRepository
         );
     }
 
-    public async Task<DetailAirplaneViewModel> UpdateAsync(UpdateAirplaneViwModel entity)
+    public async Task<DetailAirplaneViewModel> UpdateAsync(UpdateAirplaneViewModel entity)
     {
         var entityToUpdate = await _context.Airplanes.FindAsync(entity.Id);
         if (entityToUpdate != null)
@@ -98,7 +98,7 @@ public class AirplaneRepository
                     entity.Prefix
                 );
         }
-        return null;
+        return null!;
     }
 
     public async Task<bool> DeleteAsync(int id)

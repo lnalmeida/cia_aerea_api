@@ -1,8 +1,8 @@
 namespace cia_aerea_api.ViewModels.Airplane;
 
-public class UpdateAirplaneViwModel
+public class UpdateAirplaneViewModel
 {
-    public UpdateAirplaneViwModel(int id, string manufacturer, string model, string prefix)
+    public UpdateAirplaneViewModel(int id, string manufacturer, string model, string prefix)
     { 
         Id = id;
         Manufacturer = manufacturer;

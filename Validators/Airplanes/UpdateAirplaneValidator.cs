@@ -1,15 +1,14 @@
 using cia_aerea_api.Contexts;
-using cia_aerea_api.Repositories;
 using cia_aerea_api.ViewModels.Airplane;
 using FluentValidation;
 
 namespace cia_aerea_api.Validators.Airplanes;
 
-public class AddAirplaneValidator : AbstractValidator<AddAirplaneViewModel>
+public class UpdateAirplaneValidator : AbstractValidator<UpdateAirplaneViewModel>
 {
     private readonly CiaAereaContext _context;
     
-    public AddAirplaneValidator(CiaAereaContext context)
+    public UpdateAirplaneValidator(CiaAereaContext context)
     {
         _context = context;
         
@@ -23,8 +22,10 @@ public class AddAirplaneValidator : AbstractValidator<AddAirplaneViewModel>
         
         RuleFor(a => a.Prefix)
             .NotEmpty().WithMessage("The Prefix field cannot be null.")
-            .MaximumLength(10).WithMessage("The field Prefix must contain a maximum of 10 characters")
-            .Must(prefix => _context.Airplanes.Count(a => a.Prefix == prefix) == 0)
+            .MaximumLength(10).WithMessage("The field Prefix must contain a maximum of 10 characters");
+
+        RuleFor(a => a)
+            .Must(airplane => _context.Airplanes.Count(a => a.Prefix == airplane.Prefix && a.Id != airplane.Id) == 0)
             .WithMessage("There is already a plane registered with this prefix.");
     }
 }
