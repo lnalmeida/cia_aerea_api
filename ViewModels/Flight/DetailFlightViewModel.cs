@@ -6,7 +6,7 @@ namespace cia_aerea_api.ViewModels.Flight;
 
 public class DetailFlightViewModel
 {
-    public DetailFlightViewModel(int id, string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime, int airplaneId, int pilotId)
+    public DetailFlightViewModel(int id, string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime, int airplaneId, int pilotId, DetailAirplaneViewModel? airplane, DetailPilotViewModel? pilot)
     {
         Id = id;
         Origin = origin;
@@ -15,8 +15,9 @@ public class DetailFlightViewModel
         ArrivalDateTime = arrivalDateTime;
         AirplaneId = airplaneId;
         PilotId = pilotId;
+        Airplane = airplane;
+        Pilot = pilot;
     }
-
   
     public DetailFlightViewModel(int id, string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime)
     {
@@ -34,8 +35,6 @@ public class DetailFlightViewModel
     public DateTime ArrivalDateTime { get; set; }
     public int AirplaneId { get; set; }
     public int PilotId { get; set; }
-    [JsonIgnore]
     public DetailAirplaneViewModel? Airplane { get; set; }
-    [JsonIgnore]
     public DetailPilotViewModel? Pilot { get; set; }
 }

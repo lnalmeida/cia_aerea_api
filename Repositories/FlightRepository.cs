@@ -17,9 +17,9 @@ public class FlightRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<DetailFlightViewModel>> GetAllAsync(string? origin, string? destiny, DateTime? departure, DateTime? arrival)
+    public async Task<IEnumerable<ListFlightViewModel>> GetAllAsync(string? origin, string? destiny, DateTime? departure, DateTime? arrival)
     {
-        var filterOrigin = (Flight flight) => string.IsNullOrWhiteSpace(origin) || (flight.Origin.IndexOf(origin, StringComparison.OrdinalIgnoreCase) >= 0) || flight.Origin == origin;
+        var filterOrigin =  (Flight flight) => string.IsNullOrWhiteSpace(origin) || (flight.Origin.IndexOf(origin, StringComparison.OrdinalIgnoreCase) >= 0) || flight.Origin == origin;
         var filterDestiny = (Flight flight) => string.IsNullOrWhiteSpace(destiny) ||  (flight.Destiny.IndexOf(destiny, StringComparison.OrdinalIgnoreCase) >= 0) || flight.Destiny == destiny;
         var filterDeparture = (Flight flight) => !departure.HasValue || flight.DepartureDateTime >= departure;
         var filterArrival = (Flight flight) => !arrival.HasValue || flight.ArrivalDateTime <= arrival;
@@ -31,7 +31,7 @@ public class FlightRepository
             .Where(filterDestiny)
             .Where(filterDeparture)
             .Where(filterArrival)
-            .Select<Flight, DetailFlightViewModel>(f => new DetailFlightViewModel(
+            .Select<Flight, ListFlightViewModel>(f => new ListFlightViewModel(
                 f.Id,
                 f.Origin,
                 f.Destiny,
@@ -75,7 +75,9 @@ public class FlightRepository
             flight.DepartureDateTime,
             flight.ArrivalDateTime,
             flight.AirplaneId,
-            flight.PilotId
+            flight.PilotId, 
+            flightAirplane,
+            flightPilot
         );
 
         return detailFlightViewModel;
@@ -83,7 +85,7 @@ public class FlightRepository
 
     public async Task<DetailFlightViewModel> AddAsync(AddFlightViewModel entity)
     {
-        var flight = new Models.Flight(
+        var flight = new Flight(
             entity.Origin, 
             entity.Destiny,
             entity.DepartureDateTime,
@@ -95,15 +97,8 @@ public class FlightRepository
         _context.Flights.Add(flight);
         await _context.SaveChangesAsync();
         
-        return new DetailFlightViewModel(
-            flight.Id,
-            flight.Origin,
-            flight.Destiny,
-            flight.DepartureDateTime, 
-            flight.ArrivalDateTime,
-            flight.AirplaneId,
-            flight.PilotId
-        );
+        var newFlight = await GetByIdAsync(flight.Id);
+        return  newFlight;
     }
     
     public async Task<DetailFlightViewModel> UpdateAsync(UpdateFlightViewModel entity)
@@ -113,15 +108,8 @@ public class FlightRepository
         {
             _context.Entry(entityToUpdate).CurrentValues.SetValues(entity);
             await _context.SaveChangesAsync();
-            return new DetailFlightViewModel(
-                entity.Id,
-                entity.Origin, 
-                entity.Destiny,
-                entity.DepartureDateTime,
-                entity.ArrivalDateTime,
-                entity.AirplaneId,
-                entity.PilotId
-            );
+            var updatedFlight = await GetByIdAsync(entity.Id);
+            return  updatedFlight;
         }
         return null!;
     }
