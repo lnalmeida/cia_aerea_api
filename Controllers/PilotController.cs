@@ -48,8 +48,8 @@ public class PilotController : ControllerBase
     [HttpGet("{id}")]
     public  async Task<ActionResult<ResponseViewModel<DetailPilotViewModel>>> GetPilotByIdAsync(int id)
     {
-        var airplane =  await _pilotRepository.GetByIdAsync(id);
-        if (airplane is null)
+        var pilot =  await _pilotRepository.GetByIdAsync(id);
+        if (pilot is null)
         {
             var notFound =   new ResponseViewModel<string>(
                 404, 
@@ -61,7 +61,7 @@ public class PilotController : ControllerBase
         var response = new ResponseViewModel<DetailPilotViewModel>(
             200,
             "OK",
-            airplane
+            pilot
         );
         return Ok(response);
     }
@@ -92,18 +92,19 @@ public class PilotController : ControllerBase
     }
     
     [HttpPut]
-    public  async Task<ActionResult<ResponseViewModel<DetailPilotViewModel>>> UpdatePilotAsync( UpdatePilotViewModel airplaneData)
+    public  async Task<ActionResult<ResponseViewModel<DetailPilotViewModel>>> UpdatePilotAsync( UpdatePilotViewModel pilotData)
     {
-        if (airplaneData is null)
+        if (pilotData is null)
         {
             var nullResponse = new ResponseViewModel<string>(
-                404, "The airplane data can not be null.", null
+                404, "The pilot data can not be null.", null
             );
             return NotFound(nullResponse);
         }
-        
-        var validationResult = await _validationService.ValidateModel(airplaneData, _updatePilotValidator); 
-        if (!validationResult.IsValid)
+
+        var existsPilot = await _pilotRepository.GetByIdAsync(pilotData.Id);
+        var validationResult = await _validationService.ValidateModel(pilotData, _updatePilotValidator); 
+        if (!validationResult.IsValid && existsPilot != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
                 400, "Validation failed", null, validationResult.Errors
@@ -112,9 +113,9 @@ public class PilotController : ControllerBase
             return BadRequest(validationFailedResponse);
         }
         
-        var airplane =  await _pilotRepository.UpdateAsync(airplaneData);
+        var pilot =  await _pilotRepository.UpdateAsync(pilotData);
         
-        if (airplane is null)
+        if (pilot is null)
         {
             var notFound = new ResponseViewModel<string>(
                 404, "Pilot is not registered", null
@@ -122,7 +123,7 @@ public class PilotController : ControllerBase
             return NotFound(notFound);
         }
         var response = new ResponseViewModel<DetailPilotViewModel>(
-            200, "OK", airplane
+            200, "OK", pilot
         );
         return Ok(response);
     }
@@ -130,8 +131,9 @@ public class PilotController : ControllerBase
     [HttpDelete]
     public  async Task<ActionResult<ResponseViewModel<string>>> DeletePilotAsync( int id)
     {
+        var existsPilot = await _pilotRepository.GetByIdAsync(id);
         var validationResult = await _validationService.ValidateModel(id, _deletePilotValidator);
-        if (!validationResult.IsValid)
+        if (!validationResult.IsValid && existsPilot != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
                 400, "Validation failed", null, validationResult.Errors

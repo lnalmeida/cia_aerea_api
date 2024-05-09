@@ -1,6 +1,7 @@
 using cia_aerea_api.Contexts;
 using cia_aerea_api.Repositories;
 using cia_aerea_api.Validators.Airplanes;
+using cia_aerea_api.Validators.Flights;
 using cia_aerea_api.Validators.Pilots;
 using cia_aerea_api.Validators.Services;
 using Microsoft.AspNetCore.Diagnostics;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<CiaAereaContext>();
 //repositories
 builder.Services.AddScoped<AirplaneRepository>();
 builder.Services.AddScoped<PilotRepository>();
+builder.Services.AddScoped<FlightRepository>();
 //validators
 builder.Services.AddScoped<AddAirplaneValidator>();
 builder.Services.AddScoped<UpdateAirplaneValidator>();
@@ -23,6 +25,10 @@ builder.Services.AddScoped<AddPilotValidator>();
 builder.Services.AddScoped<UpdatePilotValidator>();
 builder.Services.AddScoped<DeletePilotValidator>();
 builder.Services.AddScoped<ValidationService>();
+builder.Services.AddScoped<AddFlightValidator>();
+builder.Services.AddScoped<UpdateFlightValidator>();
+builder.Services.AddScoped<DeleteFlightValidator>();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

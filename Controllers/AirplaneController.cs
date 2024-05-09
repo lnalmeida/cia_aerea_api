@@ -101,9 +101,10 @@ public class AirplaneController : ControllerBase
             );
             return NotFound(nullResponse);
         }
-        
+
+        var existsAirplane = await _airplaneRepository.GetByIdAsync(airplaneData.Id);
         var validationResult = await _validationService.ValidateModel(airplaneData, _updateAirplaneValidator); 
-        if (!validationResult.IsValid)
+        if (!validationResult.IsValid && existsAirplane != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
                 400, "Validation failed", null, validationResult.Errors
@@ -130,8 +131,9 @@ public class AirplaneController : ControllerBase
     [HttpDelete]
     public  async Task<ActionResult<ResponseViewModel<string>>> DeleteAirplaneAsync( int id)
     {
+        var existsAirplane = await _airplaneRepository.GetByIdAsync(id);
         var validationResult = await _validationService.ValidateModel(id, _deleteAirplaneValidator);
-        if (!validationResult.IsValid)
+        if (!validationResult.IsValid && existsAirplane != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
                 400, "Validation failed", null, validationResult.Errors
