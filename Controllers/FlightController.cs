@@ -1,7 +1,9 @@
 using System.Text.Json;
 using cia_aerea_api.Repositories;
+using cia_aerea_api.Validators.Cancellation;
 using cia_aerea_api.Validators.Flights;
 using cia_aerea_api.Validators.Services;
+using cia_aerea_api.ViewModels.Cancellation;
 using cia_aerea_api.ViewModels.Flight;
 using cia_aerea_api.ViewModels.Generics;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +19,16 @@ public class FlightController : ControllerBase
     private readonly AddFlightValidator _addFlightValidator;
     private readonly UpdateFlightValidator _updateFlightValidator;
     private readonly DeleteFlightValidator _deleteFlightValidator;
-    public FlightController(FlightRepository flightRepository, ValidationService validationService, AddFlightValidator addFlightValidator, UpdateFlightValidator updateFlightValidator, DeleteFlightValidator deleteFlightValidator)
+    private readonly FlightCancellationValidator _cancellationValidator;
+    
+    public FlightController(FlightRepository flightRepository, ValidationService validationService, AddFlightValidator addFlightValidator, UpdateFlightValidator updateFlightValidator, DeleteFlightValidator deleteFlightValidator, FlightCancellationValidator cancellationValidator)
     {
         _flightRepository = flightRepository;
         _validationService = validationService;
         _addFlightValidator = addFlightValidator;
         _updateFlightValidator = updateFlightValidator;
         _deleteFlightValidator = deleteFlightValidator;
+        _cancellationValidator = cancellationValidator;
     }
     
     [HttpGet]
@@ -164,4 +169,22 @@ public class FlightController : ControllerBase
         return NotFound(notFound);
     }
 
+    [HttpPost("cancellation")]
+    public async Task<ActionResult<ResponseViewModel<object>>> CancelFlightAsync(CancellationViewModel cancellationData)
+    {
+        var validationResult = await _validationService.ValidateModel(cancellationData, _cancellationValidator);
+        if (!validationResult.IsValid)
+        {
+            var validationFailedResponse = new ResponseViewModel<object>(
+                400, "Validation failed", null, validationResult.Errors
+            );
+        
+            return BadRequest(validationFailedResponse);
+        }
+        
+        var flyCancelled = await _flightRepository.FlightCancellation(cancellationData);
+        var response =  new ResponseViewModel<DetailFlightViewModel>(200, "OK", flyCancelled);
+        return Ok(response);
+    
+    }
 }

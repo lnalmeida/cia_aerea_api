@@ -1,6 +1,7 @@
 using cia_aerea_api.Contexts;
 using cia_aerea_api.Models;
 using cia_aerea_api.ViewModels.Airplane;
+using cia_aerea_api.ViewModels.Cancellation;
 using cia_aerea_api.ViewModels.Flight;
 using cia_aerea_api.ViewModels.Pilot;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,7 @@ public class FlightRepository
         var flight = await _context.Flights
             .Include(f => f.Pilot)
             .Include(f => f.Airplane)
+            .Include(f => f.FlightCancelations)
             .FirstOrDefaultAsync(f => f.Id == id);
         if (flight == null)
         {
@@ -68,17 +70,39 @@ public class FlightRepository
             flight.Pilot.Registration
         );
 
-        var detailFlightViewModel = new DetailFlightViewModel(
-            flight.Id,
-            flight.Origin,
-            flight.Destiny,
-            flight.DepartureDateTime,
-            flight.ArrivalDateTime,
-            flight.AirplaneId,
-            flight.PilotId, 
-            flightAirplane,
-            flightPilot
-        );
+        var detailFlightViewModel = new DetailFlightViewModel();
+
+        if (flight.FlightCancelations != null)
+        {
+            var flightCancellation = new CancellationDetailViewModel(
+                flight.FlightCancelations.Id,
+                flight.FlightCancelations.CancelationReason,
+                flight.FlightCancelations.NotificationDateTime,
+                flight.FlightCancelations.FlightId
+            );
+            detailFlightViewModel.Id = flight.Id;
+            detailFlightViewModel.Origin = flight.Origin;
+            detailFlightViewModel.Destiny = flight.Destiny;
+            detailFlightViewModel.DepartureDateTime = flight.DepartureDateTime;
+            detailFlightViewModel.ArrivalDateTime = flight.ArrivalDateTime;
+            detailFlightViewModel.AirplaneId = flight.AirplaneId;
+            detailFlightViewModel.PilotId = flight.PilotId;
+            detailFlightViewModel.Airplane = flightAirplane;
+            detailFlightViewModel.Pilot = flightPilot;
+            detailFlightViewModel.Cancellation = flightCancellation;
+        }
+        else
+        {
+            detailFlightViewModel.Id = flight.Id;
+            detailFlightViewModel.Origin = flight.Origin;
+            detailFlightViewModel.Destiny = flight.Destiny;
+            detailFlightViewModel.DepartureDateTime = flight.DepartureDateTime;
+            detailFlightViewModel.ArrivalDateTime = flight.ArrivalDateTime;
+            detailFlightViewModel.AirplaneId = flight.AirplaneId;
+            detailFlightViewModel.PilotId = flight.PilotId;
+            detailFlightViewModel.Airplane = flightAirplane;
+            detailFlightViewModel.Pilot = flightPilot;
+        }
 
         return detailFlightViewModel;
     }
@@ -125,6 +149,17 @@ public class FlightRepository
         }
 
         return false;
+    }
+
+    public async Task<DetailFlightViewModel?> FlightCancellation(CancellationViewModel cancellationData)
+    {
+        var flightCancellation = new FlightCancellation(cancellationData.CancelationReason,
+            cancellationData.NotificationDateTime, cancellationData.FlightId);
+
+        var cancelledFlight =  _context.FlightCancelations.Add(flightCancellation);
+        await _context.SaveChangesAsync();
+
+        return await GetByIdAsync(cancellationData.FlightId);
     }
     
 }

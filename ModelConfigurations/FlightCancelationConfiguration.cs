@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace cia_aerea_api.ModelConfigurations;
 
-public class FlightCancelationConfiguration : IEntityTypeConfiguration<FlightCancelation>
+public class FlightCancelationConfiguration : IEntityTypeConfiguration<FlightCancellation>
 {
-    public void Configure(EntityTypeBuilder<FlightCancelation> builder) 
+    public void Configure(EntityTypeBuilder<FlightCancellation> builder) 
     {
         builder.ToTable("tb_flight_cancelations");
         builder.HasKey(fc => fc.Id);

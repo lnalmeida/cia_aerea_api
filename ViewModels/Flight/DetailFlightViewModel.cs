@@ -1,12 +1,17 @@
 using System.Text.Json.Serialization;
 using cia_aerea_api.ViewModels.Airplane;
+using cia_aerea_api.ViewModels.Cancellation;
 using cia_aerea_api.ViewModels.Pilot;
 
 namespace cia_aerea_api.ViewModels.Flight;
 
 public class DetailFlightViewModel
 {
-    public DetailFlightViewModel(int id, string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime, int airplaneId, int pilotId, DetailAirplaneViewModel? airplane, DetailPilotViewModel? pilot)
+    public DetailFlightViewModel()
+    {
+    }
+
+    public DetailFlightViewModel(int id, string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime, int airplaneId, int pilotId, DetailAirplaneViewModel? airplane, DetailPilotViewModel? pilot, CancellationDetailViewModel? cancellation)
     {
         Id = id;
         Origin = origin;
@@ -17,6 +22,8 @@ public class DetailFlightViewModel
         PilotId = pilotId;
         Airplane = airplane;
         Pilot = pilot;
+        Cancellation = cancellation;
+
     }
   
     public DetailFlightViewModel(int id, string origin, string destiny, DateTime departureDateTime, DateTime arrivalDateTime)
@@ -37,4 +44,5 @@ public class DetailFlightViewModel
     public int PilotId { get; set; }
     public DetailAirplaneViewModel? Airplane { get; set; }
     public DetailPilotViewModel? Pilot { get; set; }
+    public CancellationDetailViewModel? Cancellation { get; set; }
 }

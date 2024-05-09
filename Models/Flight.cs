@@ -24,5 +24,5 @@ public class Flight
 
     public Airplane Airplane { get; set; } = null!;
     public Pilot Pilot { get; set; } = null!;
-    public FlightCancelation? FlightCancelations { get; set; } 
+    public FlightCancellation? FlightCancelations { get; set; } 
 }

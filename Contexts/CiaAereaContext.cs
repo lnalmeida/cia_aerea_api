@@ -17,7 +17,7 @@ public class CiaAereaContext : DbContext
     public DbSet<Pilot> Pilots => Set<Pilot>();
     public DbSet<Flight> Flights => Set<Flight>();
     public DbSet<Maintenance> Maintenances => Set<Maintenance>();
-    public DbSet<FlightCancelation> FlightCancelations => Set<FlightCancelation>();
+    public DbSet<FlightCancellation> FlightCancelations => Set<FlightCancellation>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

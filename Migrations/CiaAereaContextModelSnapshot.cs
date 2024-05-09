@@ -89,7 +89,7 @@ namespace cia_aerea_api.Migrations
                     b.ToTable("tb_flights", (string)null);
                 });
 
-            modelBuilder.Entity("cia_aerea_api.Models.FlightCancelation", b =>
+            modelBuilder.Entity("cia_aerea_api.Models.FlightCancellation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,11 +189,11 @@ namespace cia_aerea_api.Migrations
                     b.Navigation("Pilot");
                 });
 
-            modelBuilder.Entity("cia_aerea_api.Models.FlightCancelation", b =>
+            modelBuilder.Entity("cia_aerea_api.Models.FlightCancellation", b =>
                 {
                     b.HasOne("cia_aerea_api.Models.Flight", "Flight")
                         .WithOne("FlightCancelations")
-                        .HasForeignKey("cia_aerea_api.Models.FlightCancelation", "FlightId")
+                        .HasForeignKey("cia_aerea_api.Models.FlightCancellation", "FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

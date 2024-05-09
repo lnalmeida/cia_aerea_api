@@ -1,6 +1,7 @@
 using cia_aerea_api.Contexts;
 using cia_aerea_api.Repositories;
 using cia_aerea_api.Validators.Airplanes;
+using cia_aerea_api.Validators.Cancellation;
 using cia_aerea_api.Validators.Flights;
 using cia_aerea_api.Validators.Pilots;
 using cia_aerea_api.Validators.Services;
@@ -28,6 +29,7 @@ builder.Services.AddScoped<ValidationService>();
 builder.Services.AddScoped<AddFlightValidator>();
 builder.Services.AddScoped<UpdateFlightValidator>();
 builder.Services.AddScoped<DeleteFlightValidator>();
+builder.Services.AddScoped<FlightCancellationValidator>();
 
 
 builder.Services.AddEndpointsApiExplorer();

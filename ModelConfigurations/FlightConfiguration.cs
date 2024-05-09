@@ -38,6 +38,6 @@ public class FlightConfiguration :IEntityTypeConfiguration<Flight>
 
         builder.HasOne(f => f.FlightCancelations)
             .WithOne(fc => fc.Flight)
-            .HasForeignKey<FlightCancelation>(fc => fc.FlightId);
+            .HasForeignKey<FlightCancellation>(fc => fc.FlightId);
     }
 }
