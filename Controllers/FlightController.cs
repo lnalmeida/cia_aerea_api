@@ -187,4 +187,15 @@ public class FlightController : ControllerBase
         return Ok(response);
     
     }
+
+    [HttpGet("{id}/record")]
+    public async Task<IActionResult> GenerateFlightPDF(int id)
+    {
+        var content = await _flightRepository.GenerateFlightRecordPDF(id);
+        if (content != null)
+        {
+            return File(content, "application/pdf");
+        };
+        return NotFound($"Flight Id {id} not Found");
+    } 
 }

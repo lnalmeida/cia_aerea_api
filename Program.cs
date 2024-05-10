@@ -5,6 +5,8 @@ using cia_aerea_api.Validators.Cancellation;
 using cia_aerea_api.Validators.Flights;
 using cia_aerea_api.Validators.Pilots;
 using cia_aerea_api.Validators.Services;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +32,8 @@ builder.Services.AddScoped<AddFlightValidator>();
 builder.Services.AddScoped<UpdateFlightValidator>();
 builder.Services.AddScoped<DeleteFlightValidator>();
 builder.Services.AddScoped<FlightCancellationValidator>();
+//injecting IConverter form DinkToPDF
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
 builder.Services.AddEndpointsApiExplorer();
