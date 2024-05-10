@@ -28,7 +28,7 @@ public class PilotController : ControllerBase
     }
     
     [HttpGet]
-    public  async Task<ActionResult<ResponseViewModel<List<ListPilotsViewModel>>>> GetAllPilotsAsync()
+    public  async Task<ActionResult<IEnumerable<ResponseViewModel<ListPilotsViewModel>>>> GetAllPilotsAsync()
     {
         var pilots =  await _pilotRepository.GetAllAsync();
         var listPilotViewModel = pilots.Select(
@@ -67,6 +67,7 @@ public class PilotController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public  async Task<ActionResult<ResponseViewModel<object>>> AddPilotAsync( AddPilotViewModel pilotData)
     {
         if (pilotData is null)
@@ -88,7 +89,7 @@ public class PilotController : ControllerBase
         var response = new ResponseViewModel<DetailPilotViewModel>(
             201, "CREATED", pilot
         );
-        return Ok(response);
+        return CreatedAtAction("AddPilot", response);
     }
     
     [HttpPut]

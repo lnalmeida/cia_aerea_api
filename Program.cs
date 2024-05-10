@@ -3,6 +3,7 @@ using cia_aerea_api.Repositories;
 using cia_aerea_api.Validators.Airplanes;
 using cia_aerea_api.Validators.Cancellation;
 using cia_aerea_api.Validators.Flights;
+using cia_aerea_api.Validators.Maintenances;
 using cia_aerea_api.Validators.Pilots;
 using cia_aerea_api.Validators.Services;
 using DinkToPdf;
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<CiaAereaContext>();
 builder.Services.AddScoped<AirplaneRepository>();
 builder.Services.AddScoped<PilotRepository>();
 builder.Services.AddScoped<FlightRepository>();
+builder.Services.AddScoped<MaintenanceRepository>();
 //validators
 builder.Services.AddScoped<AddAirplaneValidator>();
 builder.Services.AddScoped<UpdateAirplaneValidator>();
@@ -32,6 +34,9 @@ builder.Services.AddScoped<AddFlightValidator>();
 builder.Services.AddScoped<UpdateFlightValidator>();
 builder.Services.AddScoped<DeleteFlightValidator>();
 builder.Services.AddScoped<FlightCancellationValidator>();
+builder.Services.AddScoped<AddMaintenanceValidator>();
+builder.Services.AddScoped<UpdateMaintenanceValidator>();
+builder.Services.AddScoped<DeleteMaintenanceValidator>();
 //injecting IConverter form DinkToPDF
 builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 

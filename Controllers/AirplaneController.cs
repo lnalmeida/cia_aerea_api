@@ -27,7 +27,7 @@ public class AirplaneController : ControllerBase
     }
     
     [HttpGet]
-    public  async Task<ActionResult<ResponseViewModel<List<ListAirplaneViewModel>>>> GetAllAirplanesAsync()
+    public  async Task<ActionResult<IEnumerable<ResponseViewModel<ListAirplaneViewModel>>>> GetAllAirplanes()
     {
         var airplanes =  await _airplaneRepository.GetAllAsync();
         var listAirplaneViewModel = airplanes.Select(
@@ -46,7 +46,7 @@ public class AirplaneController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public  async Task<ActionResult<ResponseViewModel<DetailAirplaneViewModel>>> GetAirplaneByIdAsync(int id)
+    public  async Task<ActionResult<ResponseViewModel<DetailAirplaneViewModel>>> GetAirplaneById(int id)
     {
         var airplane =  await _airplaneRepository.GetByIdAsync(id);
         if (airplane is null)
@@ -67,7 +67,8 @@ public class AirplaneController : ControllerBase
     }
 
     [HttpPost]
-    public  async Task<ActionResult<ResponseViewModel<object>>> AddAirplaneAsync( AddAirplaneViewModel airplaneData)
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public  async Task<ActionResult<ResponseViewModel<object>>> AddAirplane( AddAirplaneViewModel airplaneData)
     {
         if (airplaneData is null)
         {
@@ -88,11 +89,11 @@ public class AirplaneController : ControllerBase
         var response = new ResponseViewModel<DetailAirplaneViewModel>(
             201, "CREATED", airplane
         );
-        return Ok(response);
+        return CreatedAtAction("AddAirplane", response);
     }
     
     [HttpPut]
-    public  async Task<ActionResult<ResponseViewModel<DetailAirplaneViewModel>>> UpdateAirplaneAsync( UpdateAirplaneViewModel airplaneData)
+    public  async Task<ActionResult<ResponseViewModel<DetailAirplaneViewModel>>> UpdateAirplane( UpdateAirplaneViewModel airplaneData)
     {
         if (airplaneData is null)
         {
@@ -129,7 +130,7 @@ public class AirplaneController : ControllerBase
     }
     
     [HttpDelete]
-    public  async Task<ActionResult<ResponseViewModel<string>>> DeleteAirplaneAsync( int id)
+    public  async Task<ActionResult<ResponseViewModel<string>>> DeleteAirplane( int id)
     {
         var existsAirplane = await _airplaneRepository.GetByIdAsync(id);
         var validationResult = await _validationService.ValidateModel(id, _deleteAirplaneValidator);

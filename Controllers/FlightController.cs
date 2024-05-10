@@ -32,7 +32,7 @@ public class FlightController : ControllerBase
     }
     
     [HttpGet]
-    public  async Task<ActionResult<ResponseViewModel<List<ListFlightViewModel>>>> GetAllFlightsAsync(string? origin, string? destiny, DateTime? departure, DateTime? arrival)
+    public  async Task<ActionResult<IEnumerable<ResponseViewModel<ListFlightViewModel>>>> GetAllFlights(string? origin, string? destiny, DateTime? departure, DateTime? arrival)
     {
         var flights =  await _flightRepository.GetAllAsync( origin,  destiny,  departure,  arrival);
         var listFlightViewModel = flights
@@ -80,6 +80,7 @@ public class FlightController : ControllerBase
     }
     
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public  async Task<ActionResult<ResponseViewModel<object>>> AddFlightAsync( AddFlightViewModel flightData)
     {
         if (flightData is null)
@@ -101,7 +102,7 @@ public class FlightController : ControllerBase
         var response = new ResponseViewModel<DetailFlightViewModel>(
             201, "CREATED", flight
         );
-        return Ok(response);
+        return CreatedAtAction("AddFlight", response);
     }
     
     [HttpPut]
