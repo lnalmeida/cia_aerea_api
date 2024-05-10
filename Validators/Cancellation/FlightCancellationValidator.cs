@@ -20,18 +20,18 @@ public class FlightCancellationValidator : AbstractValidator<CancellationViewMod
                 .FirstOrDefault(f => f.Id == cancellation.FlightId);
             if (flight == null)
             {
-                validationContext.AddFailure("Invalid flight Id.");
+                validationContext.AddFailure("O Id do vôo é inválido.");
             }
             else
             {
                 if (flight.FlightCancelations != null)
                 {
-                    validationContext.AddFailure("You can't cancel a flinght already cacelled.");
+                    validationContext.AddFailure("Não é possível cancelar um vôo já cancelado.");
                 }
 
                 if (flight.DepartureDateTime <= DateTime.Now && flight.ArrivalDateTime >= DateTime.Now || flight.ArrivalDateTime <= DateTime.Now)
                 {
-                    validationContext.AddFailure("It is not possible to cancel a flight that is in progress or has already completed.");
+                    validationContext.AddFailure("Não é possível cancelar um vôo em andamento ou já finalizado.");
                 }
             }
         });

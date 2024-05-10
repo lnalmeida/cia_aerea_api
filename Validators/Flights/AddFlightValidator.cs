@@ -16,18 +16,18 @@ public class AddFlightValidator : AbstractValidator<AddFlightViewModel>
 
         RuleFor(f => f.Origin)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage("The Origin field cannot be null.")
-            .Length(3).WithMessage("The field Origin must contain 3 characters");
+            .NotEmpty().WithMessage("O campo ORIGEM deve ser informado.")
+            .Length(3).WithMessage("O campo ORIGEM deve conter 3 caracteres.");
             
         RuleFor(f => f.Destiny)
             .Cascade(CascadeMode.Stop)
-            .NotEmpty().WithMessage("The Destiny field cannot be null.")
-            .Length(3).WithMessage("The field Destiny must contain 3 characters");
+            .NotEmpty().WithMessage("O campo DESTINO deve ser informado.")
+            .Length(3).WithMessage("O campo DESTINO deve conter 3 caracteres.");
 
         RuleFor(f => f)
             .Cascade(CascadeMode.Stop)
-            .Must(flight => flight.DepartureDateTime >= DateTime.Now.AddHours(1)).WithMessage("Departure time must be at least 1 hour from now.")
-            .Must(flight => flight.ArrivalDateTime > flight.DepartureDateTime).WithMessage("Arrival time must be at greater than Departure time.");
+            .Must(flight => flight.DepartureDateTime >= DateTime.Now.AddHours(1)).WithMessage("A Data/hora de partida deve ser no mínimo daqui a 1 hora.")
+            .Must(flight => flight.ArrivalDateTime > flight.DepartureDateTime).WithMessage("A data/hora de chegada deve ser maior que a data/hora de partida.");
 
         RuleFor(v => v).Custom((flight, validationContext) =>
         {
@@ -36,7 +36,7 @@ public class AddFlightValidator : AbstractValidator<AddFlightViewModel>
                 .FirstOrDefault(p => p.Id == flight.PilotId);
             if (pilot == null)
             {
-                validationContext.AddFailure("Invalid pilot.");
+                validationContext.AddFailure("Piloto inválido.");
             }
             else
             {
@@ -47,7 +47,7 @@ public class AddFlightValidator : AbstractValidator<AddFlightViewModel>
 
                 if (pilotInFlight)
                 {
-                    validationContext.AddFailure("This pilot will be flying at the selected time.");
+                    validationContext.AddFailure("O piloto estará em um outro vôo no horário selecionado.");
                 }
             }
 
@@ -58,7 +58,7 @@ public class AddFlightValidator : AbstractValidator<AddFlightViewModel>
 
             if (airplane == null)
             {
-                validationContext.AddFailure("Invalid airplane.");
+                validationContext.AddFailure("Aeronave inválida.");
             }
             else
             {
@@ -69,7 +69,7 @@ public class AddFlightValidator : AbstractValidator<AddFlightViewModel>
 
                 if (airplaneInFlight)
                 {
-                    validationContext.AddFailure("This airplane will be flying at the selected time.");
+                    validationContext.AddFailure("A aeronave estará em um outro vôo no horário selecionado.");
                 }
 
                 var airplaneInMantenance = airplane.Maintenances.Any(m =>
@@ -78,7 +78,7 @@ public class AddFlightValidator : AbstractValidator<AddFlightViewModel>
 
                 if (airplaneInMantenance)
                 {
-                    validationContext.AddFailure("This airplane will be in maintenance at the selected time.");
+                    validationContext.AddFailure("A aeronave estará em manutenção no horário selecionado.");
                 }
             }
         });

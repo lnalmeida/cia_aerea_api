@@ -66,7 +66,7 @@ public class FlightController : ControllerBase
         {
             var notFound =   new ResponseViewModel<string>(
                 404, 
-                "Flight is not registered.",
+                "Vôo não registrado.",
                 null
             );
             return NotFound(notFound);
@@ -85,14 +85,14 @@ public class FlightController : ControllerBase
     {
         if (flightData is null)
         {
-            var nullModelResponse = new ResponseViewModel<object>(400, "All flight details must be filled in", null);
+            var nullModelResponse = new ResponseViewModel<object>(400, "Todos os dados do vôo devem ser informados.", null);
             return BadRequest(nullModelResponse);
         }
         var validationResult = await _validationService.ValidateModel(flightData, _addFlightValidator);
         if (!validationResult.IsValid)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "Falha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -111,7 +111,7 @@ public class FlightController : ControllerBase
         if (flightData is null)
         {
             var nullResponse = new ResponseViewModel<string>(
-                404, "The flight data can not be null.", null
+                404, "Os dados do vôo devem ser informados", null
             );
             return NotFound(nullResponse);
         }
@@ -121,7 +121,7 @@ public class FlightController : ControllerBase
         if (!validationResult.IsValid && existsFlight != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "VFalha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -132,7 +132,7 @@ public class FlightController : ControllerBase
         if (flight is null)
         {
             var notFound = new ResponseViewModel<string>(
-                404, "flight is not registered", null
+                404, "Vôo não registrado", null
             );
             return NotFound(notFound);
         }
@@ -150,7 +150,7 @@ public class FlightController : ControllerBase
         if (!validationResult.IsValid && existsFlight != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "Falha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -164,7 +164,7 @@ public class FlightController : ControllerBase
         }
 
         var notFound = new ResponseViewModel<string>(
-            404, "Flight is not registered", null
+            404, "Vôo não registrado", null
         );
 
         return NotFound(notFound);
@@ -177,7 +177,7 @@ public class FlightController : ControllerBase
         if (!validationResult.IsValid)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "Falha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -197,6 +197,6 @@ public class FlightController : ControllerBase
         {
             return File(content, "application/pdf");
         };
-        return NotFound($"Flight Id {id} not Found");
+        return NotFound($"O vôo de Id {id} não foi encontrado.");
     } 
 }

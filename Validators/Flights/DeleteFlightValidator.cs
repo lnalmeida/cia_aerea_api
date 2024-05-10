@@ -13,8 +13,8 @@ public class DeleteFlightValidator : AbstractValidator<int>
 
         RuleFor(id => _context.Flights.Find(id))
             .Cascade(CascadeMode.Stop)
-            .NotNull().WithMessage("Flight id is invalid!")
+            .NotNull().WithMessage("O ID do vôo é inválido!")
             .Must(flight => flight.ArrivalDateTime >= DateTime.Now)
-            .WithMessage("Not is possible delete an ended flight.");
+            .WithMessage("Não é possível deletar um vôo finalizado.");
     }
 }

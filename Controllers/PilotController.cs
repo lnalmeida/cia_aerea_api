@@ -53,7 +53,7 @@ public class PilotController : ControllerBase
         {
             var notFound =   new ResponseViewModel<string>(
                 404, 
-                "Pilot is not registered.",
+                "Piloto não registrado.",
                 null
             );
             return NotFound(notFound);
@@ -72,14 +72,14 @@ public class PilotController : ControllerBase
     {
         if (pilotData is null)
         {
-            var nullModelResponse = new ResponseViewModel<object>(400, "All pilot details must be filled in", null);
+            var nullModelResponse = new ResponseViewModel<object>(400, "Todos os dados do piloto devem ser informados", null);
             return BadRequest(nullModelResponse);
         }
         var validationResult = await _validationService.ValidateModel(pilotData, _addPilotValidator);
         if (!validationResult.IsValid)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "Falha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -98,7 +98,7 @@ public class PilotController : ControllerBase
         if (pilotData is null)
         {
             var nullResponse = new ResponseViewModel<string>(
-                404, "The pilot data can not be null.", null
+                404, "Os dados do piloto devem ser informados.", null
             );
             return NotFound(nullResponse);
         }
@@ -108,7 +108,7 @@ public class PilotController : ControllerBase
         if (!validationResult.IsValid && existsPilot != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "Falha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -119,7 +119,7 @@ public class PilotController : ControllerBase
         if (pilot is null)
         {
             var notFound = new ResponseViewModel<string>(
-                404, "Pilot is not registered", null
+                404, "Piloto não registrado.", null
             );
             return NotFound(notFound);
         }
@@ -137,7 +137,7 @@ public class PilotController : ControllerBase
         if (!validationResult.IsValid && existsPilot != null)
         {
             var validationFailedResponse = new ResponseViewModel<object>(
-                400, "Validation failed", null, validationResult.Errors
+                400, "Falha de validação", null, validationResult.Errors
             );
         
             return BadRequest(validationFailedResponse);
@@ -151,7 +151,7 @@ public class PilotController : ControllerBase
         }
 
         var notFound = new ResponseViewModel<string>(
-            404, "Pilot is not registered", null
+            404, "Piloto não registrado.", null
         );
 
         return NotFound(notFound);

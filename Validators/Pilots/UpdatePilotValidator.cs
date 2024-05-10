@@ -14,15 +14,15 @@ public class UpdatePilotValidator : AbstractValidator<UpdatePilotViewModel>
         _context = context;
         
         RuleFor(p => p.Name)
-            .NotEmpty().WithMessage("The Name field cannot be null.")
-            .MaximumLength(100).WithMessage("The field Name must contain a maximum of 100 characters");
+            .NotEmpty().WithMessage("O campo NOME deve ser informado.")
+            .MaximumLength(100).WithMessage("O campo NOME deve ter o máximo de 50 caracteres.");
         
         RuleFor(p => p.Registration)
-            .NotEmpty().WithMessage("The Registration field cannot be null.")
-            .MaximumLength(10).WithMessage("The field Registration must contain a maximum of 10 characters");
+            .NotEmpty().WithMessage("O campo MATRÍCULA deve ser informado.")
+            .MaximumLength(10).WithMessage("O campo NOME deve ter o máximo de 10 caracteres.");
         
         RuleFor(p => p)
             .Must(pilot => _context.Pilots.Count(p => p.Registration == pilot.Registration && p.Id != pilot.Id) == 0)
-            .WithMessage("There is already a pilot registered with this registration.");
+            .WithMessage("Já existe um piloto registrado com esse nº de matrícula.");
     }
 }

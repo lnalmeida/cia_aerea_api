@@ -17,10 +17,10 @@ public class DeleteAirplaneValidator : AbstractValidator<int>
                 .Include(a => a.Maintenances)
                 .FirstOrDefault(a => a.Id == id))
             .Cascade(CascadeMode.Stop)
-            .NotNull().WithMessage("The airplane Id is invalid.")
+            .NotNull().WithMessage("O Id da aeronave é inválido.")
             .Must(airplane => airplane!.Flights.Count == 0)
-            .WithMessage("It is not possible to delete an aircraft that already has flights registered.")
+            .WithMessage("Não é possível excluir uma aeronave que já tenha vôos registrados.")
             .Must(airplane => airplane!.Maintenances.Count == 0)
-            .WithMessage("It is not possible to delete an aircraft that already has maintenance registered.");
+            .WithMessage("Não é possível excluma aeronave que já tenha manutenções registradas.");
     }
 }

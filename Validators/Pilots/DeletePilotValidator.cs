@@ -16,8 +16,8 @@ public class DeletePilotValidator : AbstractValidator<int>
                 .Include(p => p.Flights)
                 .FirstOrDefault(p => p.Id == id))
             .Cascade(CascadeMode.Stop)
-            .NotNull().WithMessage("The pilot Id is invalid.")
+            .NotNull().WithMessage("O Id do piloto é inválido.")
             .Must(pilot => pilot!.Flights.Count == 0)
-            .WithMessage("It is not possible to delete a pilot that already has flights registered.");
+            .WithMessage("Não é possível deletar um piloto que já tenha vôos registrados.");
     }
 }
